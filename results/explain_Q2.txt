@@ -11,4 +11,5 @@ ProjectionExec: expr=[category@0 as category, count(Int64(1))@1 as n_orders, sum
   SortExec: expr=[category@0 ASC NULLS LAST], preserve_partitioning=[false]
     AggregateExec: mode=Single, gby=[category@0 as category], aggr=[count(Int64(1)), sum(sales.amount)]
       FilterExec: order_date@1 >= 2025-03-01 AND order_date@1 <= 2025-03-31, projection=[category@0, amount@2]
-        DataSourceExec: file_groups={1 group: [[home/claude/repo/data/sales_sorted.parquet:0..108421429]]}, projection=[category, order_date, amount], file_type=parquet, predicate=order_date@4 >= 2025-03-01 AND order_date@4 <= 2025-03-31, pruning_predicate=order_date_null_count@1 != row_count@2 AND order_date_max@0 >= 2025-03-01 AND order_date_null_count@1 != row_count@2 AND order_date_min@3 <= 2025-03-31, required_guarantees=[]
+        DataSourceExec: file_groups={1 group: [[D:/Projects/Personal/Apache-Arrow-DataFusion/staging/final win/data/sales_sorted.parquet:0..108421429]]}, projection=[category, order_date, amount], file_type=parquet, predicate=order_date@4 >= 2025-03-01 AND order_date@4 <= 2025-03-31, pruning_predicate=order_date_null_count@1 != row_count@2 AND order_date_max@0 >= 2025-03-01 AND order_date_null_count@1 != row_count@2 AND order_date_min@3 <= 2025-03-31, required_guarantees=[]
+

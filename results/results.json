@@ -1,14 +1,72 @@
 {
-  "env": {
-    "python": "3.13.18",
+  "provenance": {
+    "measured_at": "2026-11-09T15:49:45+07:00",
+    "command": [
+      "src\\run_experiments.py",
+      "--data",
+      "D:\\Projects\\Personal\\Apache-Arrow-DataFusion\\staging\\final win\\data",
+      "--out",
+      "D:\\Projects\\Personal\\Apache-Arrow-DataFusion\\staging\\final win\\results",
+      "--runs",
+      "7",
+      "--parallelism",
+      "1",
+      "2",
+      "--seed",
+      "42"
+    ],
+    "python": "3.13.13",
     "datafusion": "55.0.0",
     "duckdb": "2.0.0",
     "pyarrow": "26.0.1",
     "pandas": "3.0.5",
-    "cpu_count": 2,
-    "machine": "x86_64",
-    "os": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
-    "rows": 5000000
+    "numpy": "2.5.4",
+    "os": "Windows-11-10.0.26300-SP0",
+    "machine": "AMD64",
+    "logical_processors": 12,
+    "parallelism_levels": [
+      1,
+      2
+    ],
+    "parallelism_meaning": "DataFusion target_partitions=N va DuckDB threads=N. Khong phai CPU affinity va khong phai gioi han cung N loi.",
+    "seed": 42,
+    "shuffle_seed": 7,
+    "rows": 5000000,
+    "warmup_runs": 1,
+    "measured_runs": 7,
+    "float_rtol": 1e-09,
+    "float_atol": 1e-06,
+    "bytes_scanned_meaning": "Chi so bytes_scanned do engine bao cao trong EXPLAIN ANALYZE, khong phai so byte vat ly da doc tu dia.",
+    "cache": "Cac mau do sau 1 lan warm-up; du lieu nho co the nam trong OS cache.",
+    "git_head": "70bd3e81e9e4d814387d1682d873eb82e737ff92",
+    "git_worktree_dirty": true,
+    "git_head_describes_measured_source": false,
+    "source_sha256": {
+      "src/gen_data.py": "93cc4712cf4689e6b3f4347cc7807bb156d24f78bc43309c2dd93ac709312dc9",
+      "src/run_experiments.py": "ce01ba3973f3cda866dbec0bad9cfa4d5d1c9db3b3a22b9007df98869ba2ff64",
+      "src/make_charts.py": "086988c289f570713155ec8553e5f480daa4c4faac3467ba87a84ef9fd2fad96",
+      "requirements.txt": "d299c5956e5b4dcf0cdea34581e4574a322ac675d2a7b68c9518f3e72673d4da"
+    },
+    "ram_total_bytes": 16833388544,
+    "ram_available_bytes": 2525224960
+  },
+  "env": {
+    "python": "3.13.13",
+    "datafusion": "55.0.0",
+    "duckdb": "2.0.0",
+    "pyarrow": "26.0.1",
+    "pandas": "3.0.5",
+    "numpy": "2.5.4",
+    "logical_processors": 12,
+    "parallelism_levels": [
+      1,
+      2
+    ],
+    "os": "Windows-11-10.0.26300-SP0",
+    "rows": 5000000,
+    "seed": 42,
+    "warmup_runs": 1,
+    "measured_runs": 7
   },
   "E1_correctness": {
     "Q1": {
@@ -40,45 +98,185 @@
   "E3_pruning": [
     {
       "config": "(a) sorted, có thống kê",
-      "median_ms": 4.71,
-      "row_groups": "('39', '2')",
-      "pages": "('14', '8')",
+      "target_partitions": 1,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.007665500001166947,
+      "median_ms": 7.665500001166947,
+      "samples_s": [
+        0.012715799999568844,
+        0.006204299999808427,
+        0.004958299999998417,
+        0.007033999998384388,
+        0.0088214000024891,
+        0.014043199997104239,
+        0.007665500001166947
+      ],
+      "samples_ms": [
+        12.715799999568844,
+        6.204299999808427,
+        4.958299999998417,
+        7.033999998384388,
+        8.8214000024891,
+        14.043199997104239,
+        7.665500001166947
+      ],
+      "row_groups": {
+        "total": 39,
+        "matched": 2
+      },
+      "pages": {
+        "total": 14,
+        "matched": 8
+      },
       "pushdown_rows_pruned": "0",
       "bytes_scanned": "934.7 K",
       "scan_output_rows": "151.1 K"
     },
     {
       "config": "(b) sorted, không thống kê",
-      "median_ms": 56.63,
-      "row_groups": "('39', '39')",
-      "pages": "('0', '0')",
+      "target_partitions": 1,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.06578570000056061,
+      "median_ms": 65.78570000056061,
+      "samples_s": [
+        0.06965330000093672,
+        0.07194560000061756,
+        0.0664838000011514,
+        0.06578570000056061,
+        0.06514769999921555,
+        0.05683540000245557,
+        0.057855400002154056
+      ],
+      "samples_ms": [
+        69.65330000093672,
+        71.94560000061756,
+        66.4838000011514,
+        65.78570000056061,
+        65.14769999921555,
+        56.83540000245557,
+        57.855400002154056
+      ],
+      "row_groups": {
+        "total": 39,
+        "matched": 39
+      },
+      "pages": {
+        "total": 0,
+        "matched": 0
+      },
       "pushdown_rows_pruned": "0",
       "bytes_scanned": "22.76 M",
       "scan_output_rows": "5.00 M"
     },
     {
       "config": "(c) random, có thống kê",
-      "median_ms": 75.85,
-      "row_groups": "('39', '39')",
-      "pages": "('267', '267')",
+      "target_partitions": 1,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.10100290000264067,
+      "median_ms": 101.00290000264067,
+      "samples_s": [
+        0.08192459999918356,
+        0.07412139999723877,
+        0.0865114000007452,
+        0.10448650000034831,
+        0.10100290000264067,
+        0.11547210000207997,
+        0.10708410000006552
+      ],
+      "samples_ms": [
+        81.92459999918356,
+        74.12139999723877,
+        86.5114000007452,
+        104.48650000034831,
+        101.00290000264067,
+        115.47210000207997,
+        107.08410000006552
+      ],
+      "row_groups": {
+        "total": 39,
+        "matched": 39
+      },
+      "pages": {
+        "total": 267,
+        "matched": 267
+      },
       "pushdown_rows_pruned": "0",
       "bytes_scanned": "29.81 M",
       "scan_output_rows": "5.00 M"
     },
     {
       "config": "(d) random + late materialization",
-      "median_ms": 177.48,
-      "row_groups": "('39', '39')",
-      "pages": "('267', '267')",
+      "target_partitions": 1,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.16547720000016852,
+      "median_ms": 165.47720000016852,
+      "samples_s": [
+        0.18885379999846919,
+        0.13681240000005346,
+        0.1644903999986127,
+        0.16547720000016852,
+        0.20023779999974067,
+        0.14131250000355067,
+        0.18105060000016238
+      ],
+      "samples_ms": [
+        188.85379999846919,
+        136.81240000005346,
+        164.4903999986127,
+        165.47720000016852,
+        200.23779999974067,
+        141.31250000355067,
+        181.05060000016238
+      ],
+      "row_groups": {
+        "total": 39,
+        "matched": 39
+      },
+      "pages": {
+        "total": 267,
+        "matched": 267
+      },
       "pushdown_rows_pruned": "4.86 M",
       "bytes_scanned": "29.81 M",
       "scan_output_rows": "141.2 K"
     },
     {
       "config": "(e) sorted + late materialization",
-      "median_ms": 6.98,
-      "row_groups": "('39', '2')",
-      "pages": "('14', '8')",
+      "target_partitions": 1,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.006073100001231069,
+      "median_ms": 6.073100001231069,
+      "samples_s": [
+        0.006073100001231069,
+        0.004799300000740914,
+        0.010073599998577265,
+        0.0057030999996641185,
+        0.008803400000033434,
+        0.005439700002170866,
+        0.006076699999539414
+      ],
+      "samples_ms": [
+        6.073100001231069,
+        4.799300000740914,
+        10.073599998577265,
+        5.7030999996641185,
+        8.803400000033434,
+        5.439700002170866,
+        6.076699999539414
+      ],
+      "row_groups": {
+        "total": 39,
+        "matched": 2
+      },
+      "pages": {
+        "total": 14,
+        "matched": 8
+      },
       "pushdown_rows_pruned": "9.88 K",
       "bytes_scanned": "934.7 K",
       "scan_output_rows": "141.2 K"
@@ -87,76 +285,404 @@
   "E4_udf": [
     {
       "impl": "Built-in CASE WHEN",
-      "median_ms": 217.8,
-      "correct": true
+      "target_partitions": 1,
+      "correct": true,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.31885959999999614,
+      "median_ms": 318.85959999999614,
+      "samples_s": [
+        0.31998899999962305,
+        0.3330988999987312,
+        0.25469520000115153,
+        0.28169740000157617,
+        0.2942652999990969,
+        0.37309869999808143,
+        0.31885959999999614
+      ],
+      "samples_ms": [
+        319.98899999962305,
+        333.0988999987312,
+        254.69520000115153,
+        281.69740000157617,
+        294.2652999990969,
+        373.09869999808143,
+        318.85959999999614
+      ]
     },
     {
       "impl": "Python UDF (Arrow vectorized)",
-      "median_ms": 382.8,
-      "correct": true
+      "target_partitions": 1,
+      "correct": true,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.3129707999978564,
+      "median_ms": 312.9707999978564,
+      "samples_s": [
+        0.30827119999958086,
+        0.30990669999664533,
+        0.32235710000168183,
+        0.3166272000016761,
+        0.3113828999994439,
+        0.32347130000198376,
+        0.3129707999978564
+      ],
+      "samples_ms": [
+        308.27119999958086,
+        309.90669999664533,
+        322.35710000168183,
+        316.6272000016761,
+        311.3828999994439,
+        323.47130000198376,
+        312.9707999978564
+      ]
     },
     {
       "impl": "Python UDF (row-by-row loop)",
-      "median_ms": 711.1,
-      "correct": true
+      "target_partitions": 1,
+      "correct": true,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.8692234999980428,
+      "median_ms": 869.2234999980428,
+      "samples_s": [
+        0.8851565999975719,
+        0.932705299997906,
+        0.9593520000016724,
+        0.8601684999994177,
+        0.8692234999980428,
+        0.8667138000018895,
+        0.8133531999992556
+      ],
+      "samples_ms": [
+        885.1565999975719,
+        932.705299997906,
+        959.3520000016724,
+        860.1684999994177,
+        869.2234999980428,
+        866.7138000018895,
+        813.3531999992556
+      ]
+    },
+    {
+      "impl": "Built-in CASE WHEN",
+      "target_partitions": 2,
+      "correct": true,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.12807160000011208,
+      "median_ms": 128.07160000011208,
+      "samples_s": [
+        0.1261253000011493,
+        0.12638549999974202,
+        0.12807160000011208,
+        0.14153319999968517,
+        0.13071919999856618,
+        0.13021139999909792,
+        0.12780860000202665
+      ],
+      "samples_ms": [
+        126.1253000011493,
+        126.38549999974202,
+        128.07160000011208,
+        141.53319999968517,
+        130.71919999856618,
+        130.21139999909792,
+        127.80860000202665
+      ]
+    },
+    {
+      "impl": "Python UDF (Arrow vectorized)",
+      "target_partitions": 2,
+      "correct": true,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.19121850000010454,
+      "median_ms": 191.21850000010454,
+      "samples_s": [
+        0.1945610000002489,
+        0.19641910000063945,
+        0.19121850000010454,
+        0.19020570000066073,
+        0.19074879999971017,
+        0.1848184999980731,
+        0.21600319999924977
+      ],
+      "samples_ms": [
+        194.5610000002489,
+        196.41910000063945,
+        191.21850000010454,
+        190.20570000066073,
+        190.74879999971017,
+        184.8184999980731,
+        216.00319999924977
+      ]
+    },
+    {
+      "impl": "Python UDF (row-by-row loop)",
+      "target_partitions": 2,
+      "correct": true,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "median_s": 0.7550795999995898,
+      "median_ms": 755.0795999995898,
+      "samples_s": [
+        0.7561409999980242,
+        0.7491545000011683,
+        0.7600361999975576,
+        0.7863914000008663,
+        0.7229977999995754,
+        0.7538310999989335,
+        0.7550795999995898
+      ],
+      "samples_ms": [
+        756.1409999980242,
+        749.1545000011683,
+        760.0361999975576,
+        786.3914000008663,
+        722.9977999995754,
+        753.8310999989335,
+        755.0795999995898
+      ]
     }
   ],
   "E5_vs_duckdb": [
     {
-      "threads": 1,
+      "parallelism": 1,
+      "datafusion_target_partitions": 1,
+      "duckdb_threads": 1,
       "query": "Q1",
-      "datafusion_s": 0.082,
-      "duckdb_s": 0.0669,
-      "ratio_df_over_duck": 1.23
+      "datafusion_s": 0.07035760000144364,
+      "duckdb_s": 0.06292420000318089,
+      "ratio_df_over_duck": 1.1181326103134723,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "datafusion_samples_s": [
+        0.0720355000012205,
+        0.06860170000072685,
+        0.07106280000152765,
+        0.0699239999994461,
+        0.07035760000144364,
+        0.06911939999918104,
+        0.07260180000230321
+      ],
+      "duckdb_samples_s": [
+        0.06788260000030277,
+        0.06450770000083139,
+        0.06217599999945378,
+        0.062372700002015335,
+        0.060860699999466306,
+        0.06292420000318089,
+        0.06340239999917685
+      ]
     },
     {
-      "threads": 1,
+      "parallelism": 1,
+      "datafusion_target_partitions": 1,
+      "duckdb_threads": 1,
       "query": "Q2",
-      "datafusion_s": 0.006,
-      "duckdb_s": 0.0073,
-      "ratio_df_over_duck": 0.83
+      "datafusion_s": 0.004853399997955421,
+      "duckdb_s": 0.0073578999981691595,
+      "ratio_df_over_duck": 0.6596175538078902,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "datafusion_samples_s": [
+        0.006363000000419561,
+        0.004664000000047963,
+        0.0045449000026565045,
+        0.004959400001098402,
+        0.004853399997955421,
+        0.004534799998509698,
+        0.005099099998915335
+      ],
+      "duckdb_samples_s": [
+        0.0073578999981691595,
+        0.00781009999991511,
+        0.007177399998909095,
+        0.008561799997551134,
+        0.007230799998069415,
+        0.007273600000189617,
+        0.007566500000393717
+      ]
     },
     {
-      "threads": 1,
+      "parallelism": 1,
+      "datafusion_target_partitions": 1,
+      "duckdb_threads": 1,
       "query": "Q3",
-      "datafusion_s": 0.4046,
-      "duckdb_s": 0.2655,
-      "ratio_df_over_duck": 1.52
+      "datafusion_s": 0.25075440000000526,
+      "duckdb_s": 0.2642818000022089,
+      "ratio_df_over_duck": 0.948814485136356,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "datafusion_samples_s": [
+        0.25075440000000526,
+        0.26189460000023246,
+        0.2588394000013068,
+        0.24516120000043884,
+        0.24712189999991097,
+        0.24327379999886034,
+        0.3337854999990668
+      ],
+      "duckdb_samples_s": [
+        0.2642818000022089,
+        0.26516219999757595,
+        0.26394409999920754,
+        0.2620933000034711,
+        0.264397300001292,
+        0.2630688999997801,
+        0.32101440000042203
+      ]
     },
     {
-      "threads": 1,
+      "parallelism": 1,
+      "datafusion_target_partitions": 1,
+      "duckdb_threads": 1,
       "query": "Q4",
-      "datafusion_s": 0.118,
-      "duckdb_s": 0.0522,
-      "ratio_df_over_duck": 2.26
+      "datafusion_s": 0.08984779999809689,
+      "duckdb_s": 0.06127990000095451,
+      "ratio_df_over_duck": 1.4661871183976702,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "datafusion_samples_s": [
+        0.09347550000165938,
+        0.0892048000023351,
+        0.08984779999809689,
+        0.09020190000228467,
+        0.08700709999902756,
+        0.09067589999904158,
+        0.08633630000258563
+      ],
+      "duckdb_samples_s": [
+        0.062056000002485234,
+        0.060967099998379126,
+        0.06127990000095451,
+        0.060117700002592755,
+        0.06143119999978808,
+        0.06066680000003544,
+        0.06215370000063558
+      ]
     },
     {
-      "threads": 2,
+      "parallelism": 2,
+      "datafusion_target_partitions": 2,
+      "duckdb_threads": 2,
       "query": "Q1",
-      "datafusion_s": 0.0528,
-      "duckdb_s": 0.0372,
-      "ratio_df_over_duck": 1.42
+      "datafusion_s": 0.039267100000870414,
+      "duckdb_s": 0.038826200001494726,
+      "ratio_df_over_duck": 1.0113557339981434,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "datafusion_samples_s": [
+        0.03852559999722871,
+        0.037551299999904586,
+        0.041620899999543326,
+        0.039049200000590645,
+        0.04012230000080308,
+        0.039267100000870414,
+        0.051845800000592135
+      ],
+      "duckdb_samples_s": [
+        0.046978099999250844,
+        0.038826200001494726,
+        0.036866800001007505,
+        0.03659209999750601,
+        0.04001350000180537,
+        0.041664800002763513,
+        0.037938800000119954
+      ]
     },
     {
-      "threads": 2,
+      "parallelism": 2,
+      "datafusion_target_partitions": 2,
+      "duckdb_threads": 2,
       "query": "Q2",
-      "datafusion_s": 0.0056,
-      "duckdb_s": 0.0063,
-      "ratio_df_over_duck": 0.9
+      "datafusion_s": 0.004781100000400329,
+      "duckdb_s": 0.0061814000000595115,
+      "ratio_df_over_duck": 0.7734655580215322,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "datafusion_samples_s": [
+        0.00584549999985029,
+        0.00501319999966654,
+        0.004547200001979945,
+        0.004945500000758329,
+        0.004781100000400329,
+        0.004654100001062034,
+        0.004166700000496348
+      ],
+      "duckdb_samples_s": [
+        0.005906300000788178,
+        0.006989299999986542,
+        0.005960599999525584,
+        0.0061814000000595115,
+        0.006544300002133241,
+        0.0060341000025800895,
+        0.006199999999807915
+      ]
     },
     {
-      "threads": 2,
+      "parallelism": 2,
+      "datafusion_target_partitions": 2,
+      "duckdb_threads": 2,
       "query": "Q3",
-      "datafusion_s": 0.2112,
-      "duckdb_s": 0.1541,
-      "ratio_df_over_duck": 1.37
+      "datafusion_s": 0.1625941000020248,
+      "duckdb_s": 0.241127500001312,
+      "ratio_df_over_duck": 0.6743075758722672,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "datafusion_samples_s": [
+        0.1625941000020248,
+        0.16248070000074222,
+        0.16629050000119605,
+        0.16235579999920446,
+        0.1627386000000115,
+        0.16154380000079982,
+        0.16737120000107097
+      ],
+      "duckdb_samples_s": [
+        0.22851580000133254,
+        0.23788000000058673,
+        0.23595600000044215,
+        0.2923806999970111,
+        0.24541869999666233,
+        0.24418169999989914,
+        0.241127500001312
+      ]
     },
     {
-      "threads": 2,
+      "parallelism": 2,
+      "datafusion_target_partitions": 2,
+      "duckdb_threads": 2,
       "query": "Q4",
-      "datafusion_s": 0.0621,
-      "duckdb_s": 0.0375,
-      "ratio_df_over_duck": 1.66
+      "datafusion_s": 0.050839200001064455,
+      "duckdb_s": 0.03852769999866723,
+      "ratio_df_over_duck": 1.31954931134802,
+      "warmup_runs": 1,
+      "measured_runs": 7,
+      "datafusion_samples_s": [
+        0.050783400001819246,
+        0.050839200001064455,
+        0.053167099998972844,
+        0.05600699999922654,
+        0.050868599999375874,
+        0.04992859999765642,
+        0.04826139999931911
+      ],
+      "duckdb_samples_s": [
+        0.039046799996867776,
+        0.0400110999980825,
+        0.03852769999866723,
+        0.037203200001385994,
+        0.036697600000479724,
+        0.03686139999990701,
+        0.03874279999945429
+      ]
     }
-  ]
+  ],
+  "notes": {
+    "q2_pruning": "Tren file sorted, ca DataFusion va DuckDB deu co the bo row group. Chenh thoi gian Q2 khong duoc giai thich bang viec chi DataFusion co pruning.",
+    "random_layout": "File random co bytes_scanned va do nen cot order_date khac file sorted. bytes_scanned la chi so engine, khong chung minh I/O dia la nguyen nhan chinh.",
+    "scope": "So lieu chi mo ta may, workload va cau hinh da do trong provenance."
+  }
 }

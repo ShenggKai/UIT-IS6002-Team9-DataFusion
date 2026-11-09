@@ -48,11 +48,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--rows", type=int, default=5_000_000)
     ap.add_argument("--row-group-size", type=int, default=128 * 1024)
+    ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--out", default="data")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
 
-    table = build_table(args.rows)
+    table = build_table(args.rows, seed=args.seed)
     sorted_tbl = table.sort_by([("order_date", "ascending")])
     # bản xáo trộn: cùng dữ liệu, thứ tự ngẫu nhiên
     perm = np.random.default_rng(7).permutation(args.rows)
