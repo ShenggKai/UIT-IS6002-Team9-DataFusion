@@ -1,0 +1,162 @@
+{
+  "env": {
+    "python": "3.13.18",
+    "datafusion": "55.0.0",
+    "duckdb": "2.0.0",
+    "pyarrow": "26.0.1",
+    "pandas": "3.0.5",
+    "cpu_count": 2,
+    "machine": "x86_64",
+    "os": "Linux-6.18.44-fc-v310-x86_64-with-glibc2.39",
+    "rows": 5000000
+  },
+  "E1_correctness": {
+    "Q1": {
+      "rows": 5,
+      "vs_pandas": true,
+      "vs_duckdb": true
+    },
+    "Q2": {
+      "rows": 8,
+      "vs_pandas": true,
+      "vs_duckdb": true
+    },
+    "Q3": {
+      "rows": 10,
+      "vs_pandas": true,
+      "vs_duckdb": true
+    },
+    "Q4": {
+      "rows": 15,
+      "vs_pandas": true,
+      "vs_duckdb": true
+    },
+    "Q5": {
+      "rows": 4,
+      "vs_pandas": true,
+      "vs_duckdb": true
+    }
+  },
+  "E3_pruning": [
+    {
+      "config": "(a) sorted, có thống kê",
+      "median_ms": 4.71,
+      "row_groups": "('39', '2')",
+      "pages": "('14', '8')",
+      "pushdown_rows_pruned": "0",
+      "bytes_scanned": "934.7 K",
+      "scan_output_rows": "151.1 K"
+    },
+    {
+      "config": "(b) sorted, không thống kê",
+      "median_ms": 56.63,
+      "row_groups": "('39', '39')",
+      "pages": "('0', '0')",
+      "pushdown_rows_pruned": "0",
+      "bytes_scanned": "22.76 M",
+      "scan_output_rows": "5.00 M"
+    },
+    {
+      "config": "(c) random, có thống kê",
+      "median_ms": 75.85,
+      "row_groups": "('39', '39')",
+      "pages": "('267', '267')",
+      "pushdown_rows_pruned": "0",
+      "bytes_scanned": "29.81 M",
+      "scan_output_rows": "5.00 M"
+    },
+    {
+      "config": "(d) random + late materialization",
+      "median_ms": 177.48,
+      "row_groups": "('39', '39')",
+      "pages": "('267', '267')",
+      "pushdown_rows_pruned": "4.86 M",
+      "bytes_scanned": "29.81 M",
+      "scan_output_rows": "141.2 K"
+    },
+    {
+      "config": "(e) sorted + late materialization",
+      "median_ms": 6.98,
+      "row_groups": "('39', '2')",
+      "pages": "('14', '8')",
+      "pushdown_rows_pruned": "9.88 K",
+      "bytes_scanned": "934.7 K",
+      "scan_output_rows": "141.2 K"
+    }
+  ],
+  "E4_udf": [
+    {
+      "impl": "Built-in CASE WHEN",
+      "median_ms": 217.8,
+      "correct": true
+    },
+    {
+      "impl": "Python UDF (Arrow vectorized)",
+      "median_ms": 382.8,
+      "correct": true
+    },
+    {
+      "impl": "Python UDF (row-by-row loop)",
+      "median_ms": 711.1,
+      "correct": true
+    }
+  ],
+  "E5_vs_duckdb": [
+    {
+      "threads": 1,
+      "query": "Q1",
+      "datafusion_s": 0.082,
+      "duckdb_s": 0.0669,
+      "ratio_df_over_duck": 1.23
+    },
+    {
+      "threads": 1,
+      "query": "Q2",
+      "datafusion_s": 0.006,
+      "duckdb_s": 0.0073,
+      "ratio_df_over_duck": 0.83
+    },
+    {
+      "threads": 1,
+      "query": "Q3",
+      "datafusion_s": 0.4046,
+      "duckdb_s": 0.2655,
+      "ratio_df_over_duck": 1.52
+    },
+    {
+      "threads": 1,
+      "query": "Q4",
+      "datafusion_s": 0.118,
+      "duckdb_s": 0.0522,
+      "ratio_df_over_duck": 2.26
+    },
+    {
+      "threads": 2,
+      "query": "Q1",
+      "datafusion_s": 0.0528,
+      "duckdb_s": 0.0372,
+      "ratio_df_over_duck": 1.42
+    },
+    {
+      "threads": 2,
+      "query": "Q2",
+      "datafusion_s": 0.0056,
+      "duckdb_s": 0.0063,
+      "ratio_df_over_duck": 0.9
+    },
+    {
+      "threads": 2,
+      "query": "Q3",
+      "datafusion_s": 0.2112,
+      "duckdb_s": 0.1541,
+      "ratio_df_over_duck": 1.37
+    },
+    {
+      "threads": 2,
+      "query": "Q4",
+      "datafusion_s": 0.0621,
+      "duckdb_s": 0.0375,
+      "ratio_df_over_duck": 1.66
+    }
+  ]
+}

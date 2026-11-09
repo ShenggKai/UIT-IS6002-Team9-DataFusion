@@ -1,0 +1,14 @@
+logical_plan
+Sort: sales.category ASC NULLS LAST
+  Projection: sales.category, count(Int64(1)) AS count(*) AS n_orders, sum(sales.amount) AS revenue
+    Aggregate: groupBy=[[sales.category]], aggr=[[count(Int64(1)), sum(sales.amount)]]
+      Projection: sales.category, sales.amount
+        Filter: sales.order_date >= Date32("2025-03-01") AND sales.order_date <= Date32("2025-03-31")
+          TableScan: sales projection=[category, order_date, amount], partial_filters=[sales.order_date >= Date32("2025-03-01"), sales.order_date <= Date32("2025-03-31")]
+
+physical_plan
+ProjectionExec: expr=[category@0 as category, count(Int64(1))@1 as n_orders, sum(sales.amount)@2 as revenue]
+  SortExec: expr=[category@0 ASC NULLS LAST], preserve_partitioning=[false]
+    AggregateExec: mode=Single, gby=[category@0 as category], aggr=[count(Int64(1)), sum(sales.amount)]
+      FilterExec: order_date@1 >= 2025-03-01 AND order_date@1 <= 2025-03-31, projection=[category@0, amount@2]
+        DataSourceExec: file_groups={1 group: [[home/claude/repo/data/sales_sorted.parquet:0..108421429]]}, projection=[category, order_date, amount], file_type=parquet, predicate=order_date@4 >= 2025-03-01 AND order_date@4 <= 2025-03-31, pruning_predicate=order_date_null_count@1 != row_count@2 AND order_date_max@0 >= 2025-03-01 AND order_date_null_count@1 != row_count@2 AND order_date_min@3 <= 2025-03-31, required_guarantees=[]
